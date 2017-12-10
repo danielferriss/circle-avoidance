@@ -38,7 +38,7 @@ li {
 /*make buttons*/
 li a {
     display: block;
-    color: black;
+    color: white;
     font-family: "Helvetica",Sans-Serif;
     font-weight: lighter;
     font-size: 1em;
@@ -66,8 +66,7 @@ li a:visited
 }
 
 .pagecontainer {
-    background-color: white;
-    color: black;
+    color: white;
     text-align: center;
     padding-right: 20px;
     padding-left: 20px;
@@ -81,6 +80,8 @@ li a:visited
     font-weight: lighter;
     font-size: 1em;
     border-radius: 5px;
+    border-color: white;
+    border-style: solid;
 }
 
 .head {
