@@ -6,6 +6,7 @@
 <canvas id="myCanvas" width="800px" height="500px"></canvas>
 
 <script>
+'use strict';
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var ballRadius = 10;
@@ -14,40 +15,60 @@ var y = canvas.height-30;
 var dx = 1;
 var dy = -1;
 
-function drawBall() {
-    ctx.beginPath();
-    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
+
+// function checkmouse(x, y, ballRadius) {
+//     document.onmousemove = function(e){
+//     mouseX = e.pageX;
+//     mouseY = e.pageY;  
+//     if ((mouseX > x - ballRadius && mouseX < x + ballRadius) && (mouseY > y - ballRadius && mouseY < y + ballRadius))
+//         console.log(mouseX)
+// }
+// }
+
+
+
+class Ball {
+    constructor(x, y, dx, dy, ballRadius) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.ballRadius = ballRadius;
+    }
+
+    drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+
+        if(this.x + this.dx > canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
+            this.dx = -this.dx;
+        }
+        if(this.y + dy > canvas.height-this.ballRadius || this.y + this.dy < this.ballRadius) {
+            this.dy = -this.dy;
+        }
+
+        this.x += this.dx;
+        this.y += this.dy;
+        // checkmouse(x, y, ballRadius);
+    }
 }
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    
-    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
-        dx = -dx;
-    }
-    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
-        dy = -dy;
-    }
-    
-    x += dx;
-    y += dy;
-    checkmouse(x, y, ballRadius)
-}
-
-function checkmouse(x, y, ballRadius) {
-	var event = e || window.event;
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-    if ((mouseX -x)^2 + (mouseY - y)^2 < ballRadius^2) {
-    	drawball()
-    }
-}
-setInterval(draw, 10);
-setInterval(drawBall, 100);
+const newball = new Ball(1, 1, 1, 1, 5);
+newball.drawBall()
+setInterval(newball.draw, 10);
 
 </script>
 
