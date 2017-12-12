@@ -2,7 +2,8 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <html>
 <body>
-
+<nav id="navMenu"></nav>
+<script src="ball-game/navbar.js"></script>
 <canvas id="myCanvas" width="800px" height="500px"></canvas>
 
 <script>
@@ -12,8 +13,8 @@ var ctx = canvas.getContext("2d");
 var ballRadius = 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
-var dx = 1;
-var dy = -1;
+var dx = 2;
+var dy = -2;
 
 
 // function checkmouse(x, y, ballRadius) {
@@ -34,42 +35,45 @@ class Ball {
         this.dx = dx;
         this.dy = dy;
         this.ballRadius = ballRadius;
+        this.color = '#'+Math.random().toString(16).substr(-6);
+        this.interval = setInterval(this.draw, 10);
+        this.time = 0
     }
 
     drawBall() {
+        var self = this;
         ctx.beginPath();
-        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = "#0095DD";
+        ctx.arc(self.x, self.y, self.ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = '#'+Math.random().toString(16).substr(-6);
         ctx.fill();
         ctx.closePath();
     }
 
     draw() {
+        var self = this;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         ctx.beginPath();
-        ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = "#0095DD";
+        ctx.arc(self.x, self.y, self.ballRadius, 0, Math.PI*2);
+        ctx.fillStyle = '#'+Math.random().toString(16).substr(-6);
         ctx.fill();
         ctx.closePath();
 
-        if(this.x + this.dx > canvas.width-this.ballRadius || this.x + this.dx < this.ballRadius) {
-            this.dx = -this.dx;
+        if(self.x + self.dx > canvas.width-self.ballRadius || self.x + self.dx < self.ballRadius) {
+            self.dx = -self.dx;
         }
-        if(this.y + dy > canvas.height-this.ballRadius || this.y + this.dy < this.ballRadius) {
-            this.dy = -this.dy;
+        if(self.y + self.dy > canvas.height-self.ballRadius || self.y + self.dy < self.ballRadius) {
+            self.dy = -self.dy;
         }
 
-        this.x += this.dx;
-        this.y += this.dy;
+        self.x += self.dx;
+        self.y += self.dy;
         // checkmouse(x, y, ballRadius);
     }
 }
 
-const newball = new Ball(1, 1, 1, 1, 5);
-newball.drawBall()
-setInterval(newball.draw, 10);
-
+let newball = new Ball(1, 1, 1, -1, 5);
+newball.draw()
 </script>
 
 </body>
